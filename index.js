@@ -12,12 +12,12 @@ const writeIP = (ip) => {
 	const log = ip + " - " + moment().toDate();
 	fs.writeFile('./ip_list.txt', log, { flag: 'w+'}, (err) => {
 		if (err) return console.error(err);
-		return console.log(log);
-	}
+		return console.log(ip + " - " + moment().toDate());
+	});
 };
 
 app.get  ('/', (req, res, next) => {
-	console.log(req.ip);
+	writeIP(req.ip);
 	//307 is a "NO-CACHE" redirect unlike a 301
 	res.redirect(307, coxEMSurl);
 	next();
@@ -26,7 +26,7 @@ app.get  ('/', (req, res, next) => {
 const httpServer = http.createServer(app);
 
 httpServer.listen(port, () => {
-	console.log('Listening on ' + port);
-};
+	console.log('Listening on ' + port + " - " + moment().toDate());
+});
 
 
